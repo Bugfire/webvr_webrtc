@@ -7,10 +7,6 @@ import time
 # ref. https://strawberry-linux.com/pub/drv8830-manual.pdf
 
 class DRV8830:
-  __channel_to_addr = {
-    1: 0x65,
-    2: 0x60,
-  }
   __fault_to_string = {
     0x01: "FAULT", # Something Fault
     0x02: "OCP", # Over Current
@@ -35,13 +31,11 @@ class DRV8830:
       return 0x3f
     return int(r)
 
-  def __init__(self, i2c, channel = 1, minV = 0.5, maxV = 3.0):
+  def __init__(self, i2c, addr = 0x60, minV = 0.5, maxV = 3.0):
     self.__i2c = i2c
-    self.__channel = channel
+    self.__addr = addr
     self.__minV = minV
     self.__maxV = maxV
-    if not channel in DRV8830.__channel_to_addr:
-      raise Exception
 
   def pow_to_cmd(self, pow = 1):
     if pow < 0:
@@ -51,12 +45,8 @@ class DRV8830:
     return DRV8830.__v_to_cmd((self.__maxV - self.__minV) * pow + self.__minV)
 
   @property
-  def channel(self):
-    return self.__channel
-
-  @property
   def addr(self):
-    return DRV8830.__channel_to_addr[self.channel]
+    return self.__addr
 
   @property
   def fault_status(self):
@@ -92,19 +82,18 @@ class DRV8830:
     i2c.write_byte_data(self.addr, DRV8830.__control_reg, DRV8830.__break_bit)
 
   def dump(self):
-    print( f'channel: {self.channel}' )
     print( f'address: {self.addr:#x}' )
     print( f'fault: {self.fault_status:#x} {self.fault_string}' )
 
 i2c = smbus.SMBus(1)
 
-ch1 = DRV8830(i2c, 1)
+ch1 = DRV8830(i2c, 0x60)
 ch1.dump()
 ch1.reset()
 ch1.clear_fault()
 # ch1.forward()
 
-ch2 = DRV8830(i2c, 2)
+ch2 = DRV8830(i2c, 0x65)
 ch2.reset()
 ch2.dump()
 ch2.clear_fault()
