@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.button-wrapper {
+    bottom: 20px;
+}
+
+.label-wrapper {
+    pointer-events: none;
+    top: 40px;
+}
+
+.controller-wrapper {
+    bottom: 100px;
+}
+
+.controller-wrapper .button {
+    margin: 5px 5px;
+}
+
+.button-wrapper, .label-wrapper, .controller-wrapper {
+    user-select: none;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.button {
+    border: 1px solid #fff;
+}
+
+.button, .label {
+    cursor: auto;
+    padding: 12px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font: normal 20px system-ui;
+    text-align: center;
+    opacity: 0.5;
+    outline: none;
+    z-index: 999;
+}

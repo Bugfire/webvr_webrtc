@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>webvr webrtc</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/webvr-polyfill@0.10.11/build/webvr-polyfill.min.js"></script>
+	<script src="config.js"></script>
+	<script src="bundle.js"></script>
+	<video id="remote_video" style="display: none;"></video>
+	<div class="button-wrapper">
+		<button id="button" class="button"></button>
+	</div>
+	<div class="label-wrapper">
+		<span id="info" class="label">TOUCH TO START</span>
+	</div>
+	<div class="controller-wrapper">
+		<button id="forward" class="button">↑</button><br />
+		<button id="left" class="button">←</button><button id="stop" class="button">STOP</button><button id="right" class="button">→</button><br />
+		<button id="backward" class="button">↓</button>
+	</div>
+</body>
+
+</html>
