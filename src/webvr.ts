@@ -2,16 +2,12 @@
 
 import * as THREE from "three";
 
-// import { WEBVR } from './jsm/vr/WebVR.js';
-
 export interface SphereSettings {
   xscale: number;
   yscale: number;
   xofs: number;
   yofs: number;
 }
-
-// import { WEBVR } from './jsm/vr/WebVR.js';
 
 export class SimpleScene {
   private readonly scene: THREE.Scene;
