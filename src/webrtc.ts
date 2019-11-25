@@ -48,11 +48,13 @@ export class WebRtc {
     };
     this.ws.onerror = (error): void => {
       this.onWsError(error);
+      this.onError(error);
     };
     this.ws.onmessage = (event): void => {
       this.onWsMessage(event);
     };
     this.onStreamChanged = onStreamChanged;
+    this.onError = onError;
     this.codec = codec;
   }
 
