@@ -109,19 +109,19 @@ class MotorAPIHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_handlers()
-        if self.path == 'cmd/forward':
-            ch2.reset()
-            ch1.forward()
-        if self.path == 'cmd/backward':
-            ch2.reset()
-            ch1.backward()
-        if self.path == 'cmd/left':
+        if self.path == '/cmd/forward':
             ch1.reset()
             ch2.forward()
-        if self.path == 'cmd/right':
+        if self.path == '/cmd/backward':
             ch1.reset()
             ch2.backward()
-        if self.path == 'cmd/stop':
+        if self.path == '/cmd/left':
+            ch2.reset()
+            ch1.forward()
+        if self.path == '/cmd/right':
+            ch2.reset()
+            ch1.backward()
+        if self.path == '/cmd/stop':
             ch1.reset()
             ch2.reset()
         self.wfile.write(json.dumps({"status": "ok"}).encode('utf-8'))
