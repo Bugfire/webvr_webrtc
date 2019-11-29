@@ -3,10 +3,10 @@ const path = require("path");
 module.exports = {
     mode: 'development',
     entry: {
-        app: './src/main.ts'
+        app: './html_src/main.ts'
     },
     output: {
-        path: path.join(__dirname, "public"),
+        path: path.join(__dirname, "html"),
         publicPath: "/",
         filename: 'bundle.js',
         library: ["com", "example"],
@@ -27,7 +27,7 @@ module.exports = {
     devServer: {
         open: false,
         openPage: "index.html",
-        contentBase: path.join(__dirname, 'public'),
+        contentBase: path.join(__dirname, 'html'),
         watchContentBase: true,
         port: 3000,
         host: "0.0.0.0",

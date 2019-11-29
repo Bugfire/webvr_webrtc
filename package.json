@@ -7,8 +7,8 @@
     "server": "webpack-dev-server",
     "build": "webpack",
     "watch": "webpack -w",
-    "lint": "eslint 'src/**/*.ts*'",
-    "lint:fix": "eslint --fix 'src/**/*.ts*'"
+    "lint": "eslint 'html_src/**/*.ts*'",
+    "lint:fix": "eslint --fix 'html_src/**/*.ts*'"
   },
   "keywords": [],
   "author": "",
