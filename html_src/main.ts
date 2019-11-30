@@ -27,21 +27,11 @@ document.addEventListener(
       "remote_video"
     ) as HTMLVideoElement;
 
-    document.getElementById("forward").onclick = (): void => {
-      axios.get(`${config.controller}/cmd/forward`);
-    };
-    document.getElementById("backward").onclick = (): void => {
-      axios.get(`${config.controller}/cmd/backward`);
-    };
-    document.getElementById("right").onclick = (): void => {
-      axios.get(`${config.controller}/cmd/right`);
-    };
-    document.getElementById("left").onclick = (): void => {
-      axios.get(`${config.controller}/cmd/left`);
-    };
-    document.getElementById("stop").onclick = (): void => {
-      axios.get(`${config.controller}/cmd/stop`);
-    };
+    ["forward", "backward", "right", "left", "stop"].forEach((cmd): void => {
+      document.getElementById(cmd).onclick = (): void => {
+        axios.get(`${config.controller}/cmd/${cmd}`);
+      };
+    });
     const label = document.getElementById("info");
 
     const simpleScene = new SimpleScene();
