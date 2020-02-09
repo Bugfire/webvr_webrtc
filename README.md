@@ -44,6 +44,8 @@ http/ws で動作しました。
 - momo fork、log_level を file sink に適用するや、いなや。
 - nginx のリバプロで https/wss (pi 側に音声送り込むには必要そう)
 - 右目と左目で2stream送り込んで立体視したい
+- ここに書くものでもないが、shutdown/reset button 実装 (LED でコントロール)
+- ここに書くものでもないが、audio driver install
 
 ## 参考
 

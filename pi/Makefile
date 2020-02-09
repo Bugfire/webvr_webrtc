@@ -6,8 +6,8 @@ help: ## This help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install services
-	cp momo.service /etc/systemd/system/
-	cp folo.service /etc/systemd/system/
+	cp ../momo/momo.service /etc/systemd/system/
+	cp ../folo/folo.service /etc/systemd/system/
 
 enable: install ## Enable services
 	systemctl enable momo.service
