@@ -19,6 +19,7 @@ export class SimpleScene {
   private isSelecting: boolean;
   private isDragging: boolean;
   private dragPreviousPosition = { x: 0, y: 0 };
+  private dragScale: number;
 
   public readonly renderer: THREE.WebGLRenderer;
 
@@ -31,6 +32,7 @@ export class SimpleScene {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.vr.enabled = true;
+    this.dragScale = 2000 / Math.max(window.innerWidth, window.innerHeight);
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x505050);
@@ -104,7 +106,7 @@ export class SimpleScene {
       event.preventDefault();
     });
     this.renderer.domElement.addEventListener("touchend", (event): void => {
-      this.onReleaseDrag();
+      this.onDragRelease();
       event.preventDefault();
     });
     this.renderer.domElement.addEventListener("touchmove", (event): void => {
@@ -115,7 +117,7 @@ export class SimpleScene {
       this.onMouseDown(event);
     });
     this.renderer.domElement.addEventListener("mouseup", (): void => {
-      this.onReleaseDrag();
+      this.onDragRelease();
     });
     this.renderer.domElement.addEventListener("mousemove", (event): void => {
       this.onMouseMove(event);
@@ -126,6 +128,7 @@ export class SimpleScene {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.dragScale = 2000 / Math.max(window.innerWidth, window.innerHeight);
   }
 
   public setVideo(video: HTMLVideoElement, settings: SphereSettings): void {
@@ -193,51 +196,43 @@ export class SimpleScene {
   }
 
   private onTouchStart(event: TouchEvent): void {
-    if (!this.hasVideo) {
-      return;
-    }
-    this.isDragging = true;
-    this.dragPreviousPosition = {
-      x: event.touches[0].clientX,
-      y: event.touches[0].clientY
-    };
+    this.onDragStart(event.touches[0].clientX, event.touches[0].clientY);
   }
 
   private onMouseDown(event: MouseEvent): void {
+    this.onDragStart(event.offsetX, event.offsetY);
+  }
+
+  private onTouchMove(event: TouchEvent): void {
+    this.onDragResult(event.touches[0].clientX, event.touches[0].clientY);
+  }
+
+  private onMouseMove(event: MouseEvent): void {
+    this.onDragResult(event.offsetX, event.offsetY);
+  }
+
+  private onDragStart(x: number, y: number): void {
     if (!this.hasVideo) {
       return;
     }
     this.isDragging = true;
-    this.dragPreviousPosition = { x: event.offsetX, y: event.offsetY };
+    this.dragPreviousPosition = { x: x, y: y };
   }
 
-  private onReleaseDrag(): void {
+  private onDragRelease(): void {
     this.isDragging = false;
   }
 
-  private onTouchMove(event: TouchEvent): void {
+  private onDragResult(x: number, y: number): void {
     if (this.isDragging) {
       this.rotateRootObject(
-        event.touches[0].clientX - this.dragPreviousPosition.x,
-        event.touches[0].clientY - this.dragPreviousPosition.y
+        this.dragScale * (x - this.dragPreviousPosition.x),
+        this.dragScale * (y - this.dragPreviousPosition.y)
       );
     }
     this.dragPreviousPosition = {
-      x: event.touches[0].clientX,
-      y: event.touches[0].clientY
-    };
-  }
-
-  private onMouseMove(event: MouseEvent): void {
-    if (this.isDragging) {
-      this.rotateRootObject(
-        event.offsetX - this.dragPreviousPosition.x,
-        event.offsetY - this.dragPreviousPosition.y
-      );
-    }
-    this.dragPreviousPosition = {
-      x: event.offsetX,
-      y: event.offsetY
+      x: x,
+      y: y
     };
   }
 
